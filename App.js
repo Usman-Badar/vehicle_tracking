@@ -1,20 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useKeepAwake } from 'expo-keep-awake';
+import Auth from './screens/Auth';
+import Map from './screens/Map';
+import History from './screens/History';
+import ErrorPage from './screens/ErrorPage';
+import HistoryDetails from './screens/HistoryDetails';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useKeepAwake();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Auth" component={Auth} />
+        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="History" component={History} />
+        <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
+        <Stack.Screen name="Error" component={ErrorPage} />
+      </Stack.Navigator>
+      <StatusBar style="light" backgroundColor='#000' />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
